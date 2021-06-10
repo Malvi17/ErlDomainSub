@@ -2,10 +2,9 @@ N.B.: Il programma al momento non può ancora sottoscriversi ai domini, è una s
 
 ESEMPIO DI FUNZIONAMENTO
 
-2> {ok,Pid} = gestore:start_link().
-Processo <0.162.0> creato e subbato al topic domain
-Processo <0.163.0> creato e subbato al topic domain
-Processo <0.164.0> creato e subbato al topic domain
-Processo <0.165.0> creato e subbato al topic domain
-Tutti i processi sono stati creati
-{ok,<0.161.0>}
+**2> {ok,Pid} = gestore:start_link().
+
+Prima ed unica funzione del modulo [gestore.erl](http://https://github.com/Malvi17/ErlDomainSub/src/gestore.erl).
+
+
+

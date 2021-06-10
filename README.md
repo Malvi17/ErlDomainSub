@@ -4,7 +4,7 @@ ESEMPIO DI FUNZIONAMENTO
 
 **2> {ok,Pid} = gestore:start_link().
 
-Prima ed unica funzione del modulo [gestore.erl](https:github.com/Malvi17/ErlDomainSub/src/gestore.erl).
+Prima ed unica funzione del modulo [gestore.erl](https://github.com/Malvi17/ErlDomainSub/blob/main/src/gestore.erl.
 
 
 

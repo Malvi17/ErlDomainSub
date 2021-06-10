@@ -12,6 +12,8 @@
 %% API
 -export([server/0]).
 
+%%Funzione che genera un socket sulla porta 8080 e rimane in attesa per accettare una connessione da parte di domainStatusLookup.
+%%Passati poi 10 secondi se la connessione è avvenuta invia al Socket generato il messaggio
 server() ->
   {ok, LSocket} = gen_tcp:listen(8088, [binary, {active, true}]),
   {ok, Socket} = gen_tcp:accept(LSocket),

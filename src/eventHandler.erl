@@ -13,10 +13,12 @@
 -export([init/1, handle_event/2, handle_call/2, handle_info/2, code_change/3,
   terminate/2, crea/1]).
 
+%%Utilizza la funzione crea
 init([]) ->
   crea(4),
   {ok, []}.
 
+%%Gestisce l'evento libero e pubblica sul topic domain il messaggio "parti"
 handle_event({libero}, State) ->
   ebus:pub(domain,"parti"),
   {ok, State};
@@ -36,6 +38,8 @@ code_change(_OldVsn, State, _Extra) ->
 terminate(_Reason, _State) ->
   ok.
 
+%%Funzione che crea 4 processi, generati come handler di erlbus attraverso spawn_handler.
+%%Attraverso sub invece si sottoscrive al topic domain
 crea(N) ->
   case N of
     0 -> io:format("Tutti i processi sono stati creati~n");

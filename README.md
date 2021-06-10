@@ -11,7 +11,7 @@ Ognuno di questi processi viene definito come un handler della libreria di [Erlb
 Di questa libreria ho utilizzato 3 funzioni:
 * **H = ebus_proc:spawn_handler(fun provaSub:handle_msg/2,[self()])** Crea un processo che chiamerà l callback **handleMsg** appena riceverà un messaggio dal topic in cui si sottoscritto
 * **ebus:sub(H,domain)** Sottoscrive l'hanler H al topic di nome **domain**
-* **ebus:pub(domain,"parti")** Invia a tutti i sottoscrittori del topic **domain** il messaggio "parti".(Qualsiasi sia il messaggio l'handler parte comunque, in questo caso non ho necessita di filtrare i messaggi).
+* **ebus:pub(domain,"parti")** Invia a tutti i sottoscrittori del topic **domain** il messaggio "parti". (Qualsiasi sia il messaggio l'handler parte comunque, in questo caso non ho necessita di filtrare i messaggi).
 
 Il modulo [subscriber](https://github.com/Malvi17/ErlDomainSub/blob/main/src/subscriber.erl) fornisce semplicemente un processo che attraverso **handle_msg** stampa a video il proprio Pid il messaggio ricevuto e il Pid dell'eventHandler che lo ha generato.
 

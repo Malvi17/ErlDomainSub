@@ -16,4 +16,5 @@
 start_link() ->
   {ok, Pid} = gen_event:start_link(),
   gen_event:add_handler(Pid, eventHandler, []),
+
   {ok,Pid}.

@@ -1,0 +1,35 @@
+
+cd("/home/malvi/Desktop/Tirocinio/src").
+
+c(domainStatusLookup).
+
+c(eventHandler).
+
+c(gestore).
+
+{ok,Pid} = gestore:start_link().
+
+
+
+domainStatusLookup:create_packet(Pid,"afnic").
+
+domainStatusLookup:create_packet(Pid,"malvi").
+
+domainStatusLookup:start(Pid,"afnic").
+
+
+TEST
+
+{ok,Pid} = gestore:start_link().
+
+{Socket, Packet, Host,Port,Domain} = domainStatusLookup:start(Pid,"afnic").
+
+spawn(domainStatusLookup,create_packet,[Pid,Domain,Socket,Packet,Host,Port]).
+
+Error in process <0.95.0> with exit value: {{badmatch,{error,ealready}}
+
+{ok, Socket} = gen_udp:open(8080, [binary]).
+
+domainStatusLookup:test(Pid,"afnic",30,Socket).
+
+domainStatusLookup:start(Pid,"afnic",Socket).

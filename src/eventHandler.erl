@@ -11,7 +11,7 @@
 -behaviour(gen_event).
 
 -export([init/1, handle_event/2, handle_call/2, handle_info/2, code_change/3,
-  terminate/2, crea/1, get_timestamp/0]).
+  terminate/2, crea/1, get_timestamp/0,stampaLog/3]).
 
 %%Utilizza la funzione crea
 init([]) ->
@@ -35,14 +35,7 @@ handle_event({free, FirstTime, Time3, Time2,Domain}, State) ->
 
 handle_event({active, FirstTime, Time3, Domain}, State) ->
   %%io:format("Arrivato~n"),
-  TimeStamp = calendar:system_time_to_rfc3339(os:system_time(millisecond), [{unit, millisecond}]),
-  %%Data = "["++TimeStamp++"]"++" StartedAt:"++FirstTime++" status=active elapse:"++ Time3,
-  %%{ok, IoDevice}=file:open("txt/"++Domain++".txt", [append]),
-  %%{ok, Fd1}=file:open("txt/afnic.txt", [append]),
-  %%io:format(Fd1, "[~p] status=active StartedAt: ~p Elapse: ~p ms~n",[TimeStamp,FirstTime,Time3]),
-  %%io:format(Fd, "STATUS=INACTIVE~nQuery sent: ~p~nElapsed Time: ~p ms~n~n~n",[FirstTime,Time3]),
-  %%file:close(IoDevice),
-  file:write_file("txt/"++Domain++".txt",[io_lib:format("[~p] status=active StartedAt: ~p Elapse: ~p ms~n",[TimeStamp,FirstTime,Time3])], [append]),
+  spawn(eventHandler,stampaLog,[FirstTime,Time3,Domain]),
   {ok, State};
 
 handle_event({inactive, FirstTime, Time3, Domain}, State) ->
@@ -83,6 +76,10 @@ code_change(_OldVsn, State, _Extra) ->
 
 terminate(_Reason, _State) ->
   ok.
+
+stampaLog(FirstTime, Time3, Domain) ->
+  TimeStamp = calendar:system_time_to_rfc3339(os:system_time(millisecond), [{unit, millisecond}]),
+  file:write_file("txt/"++Domain++".txt",[io_lib:format("[~p] status=active StartedAt: ~p Elapse: ~p ms~n",[TimeStamp,FirstTime,Time3])], [append]).
 
 %%Funzione che crea 4 processi, generati come handler di erlbus attraverso spawn_handler.
 %%Attraverso sub invece si sottoscrive al topic domain

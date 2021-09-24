@@ -1,0 +1,15 @@
+cd("/home/malvi/Desktop/Tirocinio/src").
+
+c(domainStatusLookup2).
+
+c(eventHandler).
+
+c(gestore).
+
+{ok,Pid} = gestore:start_link().
+
+
+domainStatusLookup2:start(Pid,"afnic").
+
+
+

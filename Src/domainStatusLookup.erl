@@ -15,13 +15,13 @@
 
 
   start(Pid,Domain) ->
-    %%
+   
     PayloadTemplate = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><iris1:request xmlns:iris1=\"urn:ietf:params:xml:ns:iris1\"><iris1:searchSet><iris1:lookupEntity registryType=\"dchk1\" entityClass=\"domain-name\" entityName=\"test.fr\"/></iris1:searchSet></iris1:request>",
     PayloadTemplate1 = string:replace(PayloadTemplate,"test",Domain),
     TransactionID = <<0>>,
     MaxRes = 5000,
     MaxResponseLength = reverse_8bit(<<MaxRes:8/integer-unit:2>>),
-    Authority = "fr",%% Prima lunghezza e poi fr
+    Authority = "fr",
     AuthorityLength =  <<2>>,
 
     Host = {192,134,5,15},
@@ -32,7 +32,7 @@
 
   test(Pid,Domain,Packet,Host,Port,N)->
     {{_Year, _Month, _Day}, {_Hour, Minute, Second}} = calendar:now_to_datetime(os:timestamp()),
-    %%io:format("~p,~p~n",[Minute,Second]),
+   
     if Minute =:= 32 andalso Second =:= 10 ->
       loop(Pid,Domain,Packet,Host,Port,N);
 
@@ -41,7 +41,7 @@
 
   loop(Pid,Domain,Packet,Host,Port,N) ->
     {X, Socket} = gen_udp:open(N, [binary]),
-    %%io:format("~p,~p~n",[X,Socket]),
+    
     case X of
       ok->
 
@@ -60,13 +60,13 @@
 
 
   sendPacket(Pid,Domain,Socket,Packet,Host,Port) ->
-    %%io:format(" SEND"),
+    
     FirstTime = calendar:system_time_to_rfc3339(os:system_time(millisecond), [{unit, millisecond}]),
     Time1 = get_timestamp(),
     spawn(gen_udp,send,[Socket,Host,Port,Packet]),
 
     inet:setopts(Socket, [{active,false}]),
-    %%{ok,{_Host,_Port,Bin}} =
+    
     case gen_udp:recv(Socket, 5000,500) of
       {ok,{_Host,_Port,Bin}} ->
         gen_udp:close(Socket),
